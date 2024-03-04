@@ -1,12 +1,17 @@
 package kr.co.grade.persistance.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class Student {
-    private String name;
-    private int score;
+    private static Long idCounter = 0L;
+    private final Long id;
+    private final String name;
+    private final int score;
 
+    public Student(String name, int score) {
+        this.id = ++idCounter;
+        this.name = name;
+        this.score = score;
+    }
 }
