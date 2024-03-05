@@ -20,6 +20,7 @@ public class StudentRepositoryImpl implements StudentRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<Student> findAllStudent() {
         return new ArrayList<>(store.values());
     }
