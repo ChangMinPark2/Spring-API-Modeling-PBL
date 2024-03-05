@@ -1,12 +1,11 @@
 package kr.co.grade.service;
 
-import kr.co.grade.persistance.domain.Student;
-
-import java.lang.reflect.Member;
+import kr.co.grade.service.model.request.StudentReqDto;
+import kr.co.grade.service.model.response.StudentResDto;
 import java.util.List;
 
 public interface StudentService {
-    void createStudent(String name, int grade);
-    List<Student> getAllStudentsByGrade(int grade);
-    List<Student> getAllStudents();
+    StudentResDto.READ createStudent(StudentReqDto.CREATE create);
+    List<StudentResDto.READ> getAllStudentsByGrade(int grade);
+    List<StudentResDto.READ> getAllStudents();
 }
