@@ -1,10 +1,11 @@
 package kr.co.grade.persistance.repository;
 
 import kr.co.grade.persistance.domain.Student;
-
+import org.springframework.stereotype.Repository;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Repository
 public class StudentRepositoryImpl implements StudentRepository {
     private final static Map<Long, Student> store = new HashMap<>();
     @Override
@@ -13,15 +14,10 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public List<Student> findByGrade(int grade) {
-        List<Student> studentsWithGrade = new ArrayList<>();
-        for (Student student : store.values()) {
-            if (student.getScore() == grade) {
-                studentsWithGrade.add(student);
-            }
-        }
-
-        return studentsWithGrade;
+    public List<Student> findAllByGrade(int grade) {
+        return store.values().stream()
+                .filter(s -> s.getGrade() == grade)
+                .collect(Collectors.toList());
     }
 
     public List<Student> findAllStudent() {
