@@ -1,0 +1,42 @@
+package kr.co.grade.infra.handler;
+
+import kr.co.grade.infra.exception.NotFoundByGrapeException;
+import kr.co.grade.infra.exception.NotFoundException;
+import kr.co.grade.infra.model.ApiResponse;
+import kr.co.grade.infra.model.ErrorCode;
+import kr.co.grade.infra.model.Status;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(NotFoundException.class)
+    protected ApiResponse<Object> handleNotFoundException(){
+        Status status = new Status(ErrorCode.NOT_FOUND);
+
+        return ApiResponse.error(status);
+    }
+
+    @ExceptionHandler(NotFoundByGrapeException.class)
+    protected ApiResponse<Object> handleNotFoundByGrapeException(){
+        Status status = new Status(ErrorCode.NOT_FOUND_BY_GRADE);
+
+        return ApiResponse.error(status);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ApiResponse<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+        String errorMessage = fieldErrors.get(0).getDefaultMessage();
+        Status status = new Status(HttpStatus.BAD_REQUEST.value(), errorMessage);
+
+        return ApiResponse.error(status);
+    }
+}
