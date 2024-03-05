@@ -20,8 +20,8 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> error(Status status) {
         return ApiResponse.<T>builder()
                 .status(status)
-                .metadata(new MetaData(0)) // 빈 MetaData 객체로 초기화
-                .results(Collections.emptyList()) // 빈 리스트로 초기화
+                .metadata(new MetaData(0))
+                .results(Collections.emptyList())
                 .build();
     }
 
