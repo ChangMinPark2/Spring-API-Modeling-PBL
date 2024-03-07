@@ -1,7 +1,8 @@
 package kr.co.grade.persistance.domain;
 
-import kr.co.grade.service.model.response.StudentResDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 @Builder
@@ -20,12 +21,5 @@ public class Student {
 
     public static Student create(String name, int grade) {
         return new Student(name, grade);
-    }
-
-    public static StudentResDto.READ toReadAll(Student student) {
-        return StudentResDto.READ.builder()
-                .name(student.getName())
-                .grade(student.grade)
-                .build();
     }
 }

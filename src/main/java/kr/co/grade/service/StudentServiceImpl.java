@@ -23,7 +23,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = Student.create(dto.name(), dto.grade());
         studentRepository.save(student);
 
-        return Student.toReadAll(student);
+        return StudentResDto.toReadAll(student);
     }
 
     @Override
