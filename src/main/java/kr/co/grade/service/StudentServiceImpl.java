@@ -32,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
         checkNotFoundByGrade(students);
 
         return students.stream()
-                .map(Student::toReadAll)
+                .map(StudentResDto::toReadAll)
                 .collect(Collectors.toList());
     }
 
@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
         checkNotFound(students);
 
         return students.stream()
-                .map(Student::toReadAll)
+                .map(StudentResDto::toReadAll)
                 .sorted(Comparator.comparingInt(StudentResDto.READ::getGrade))
                 .collect(Collectors.toList());
     }
