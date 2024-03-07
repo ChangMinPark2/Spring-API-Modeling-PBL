@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static kr.co.grade.infra.model.ApiResponse.makeResponse;
+
 @RestController
 @RequestMapping("/api/v1/students")
 @RequiredArgsConstructor
@@ -18,16 +20,16 @@ public class StudentController {
 
     @PostMapping
     public ApiResponse<StudentResDto.READ> create(@Valid @RequestBody StudentDto dto) {
-        return ApiResponse.makeResponse(List.of(studentService.create(dto)));
+        return makeResponse(List.of(studentService.create(dto)));
     }
 
     @GetMapping("/grade")
     public ApiResponse<StudentResDto.READ> getAllStudentsByGrade(@RequestParam("grade") int grade) {
-        return ApiResponse.makeResponse(studentService.getAllStudentsByGrade(grade));
+        return makeResponse(studentService.getAllStudentsByGrade(grade));
     }
 
     @GetMapping
     public ApiResponse<StudentResDto.READ> getAllStudents() {
-        return ApiResponse.makeResponse(studentService.getAllStudents());
+        return makeResponse(studentService.getAllStudents());
     }
 }
