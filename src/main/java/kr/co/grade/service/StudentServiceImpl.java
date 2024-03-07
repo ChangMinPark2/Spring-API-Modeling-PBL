@@ -1,25 +1,26 @@
 package kr.co.grade.service;
 
-import kr.co.grade.infra.exception.NotFoundByGrapeException;
 import kr.co.grade.infra.exception.NotFoundException;
 import kr.co.grade.infra.model.ErrorCode;
 import kr.co.grade.persistance.domain.Student;
 import kr.co.grade.persistance.repository.StudentRepository;
-import kr.co.grade.service.model.request.StudentReqDto;
+import kr.co.grade.service.model.request.StudentDto;
 import kr.co.grade.service.model.response.StudentResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Override
-    public StudentResDto.READ createStudent(StudentReqDto.CREATE create) {
-        Student student = new Student(create.getName(), create.getGrade());
+    public StudentResDto.READ create(StudentDto dto) {
+        Student student = Student.create(dto.name(), dto.grade());
         studentRepository.save(student);
 
         return Student.toReadAll(student);
@@ -42,7 +43,7 @@ public class StudentServiceImpl implements StudentService{
 
         return students.stream()
                 .map(Student::toReadAll)
-                .sorted((o1, o2) -> o1.getGrade() - o2.getGrade())
+                .sorted(Comparator.comparingInt(StudentResDto.READ::getGrade))
                 .collect(Collectors.toList());
     }
 
@@ -54,7 +55,7 @@ public class StudentServiceImpl implements StudentService{
 
     private static void checkNotFoundByGrade(List<Student> students) {
         if (students.isEmpty()) {
-            throw new NotFoundByGrapeException(ErrorCode.NOT_FOUND_BY_GRADE);
+            throw new NotFoundException(ErrorCode.NOT_FOUND_BY_GRADE);
         }
     }
 }

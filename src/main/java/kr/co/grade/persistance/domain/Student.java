@@ -12,10 +12,14 @@ public class Student {
     private final String name;
     private final int grade;
 
-    public Student(String name, int grade) {
+    private Student(String name, int grade) {
         this.id = ++idCounter;
         this.name = name;
         this.grade = grade;
+    }
+
+    public static Student create(String name, int grade) {
+        return new Student(name, grade);
     }
 
     public static StudentResDto.READ toReadAll(Student student) {

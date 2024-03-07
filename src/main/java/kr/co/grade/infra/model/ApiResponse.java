@@ -9,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApiResponse<T> {
     private Status status;
     private MetaData metadata;

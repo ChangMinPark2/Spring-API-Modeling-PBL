@@ -3,7 +3,7 @@ package kr.co.grade.controller;
 import jakarta.validation.Valid;
 import kr.co.grade.infra.model.ApiResponse;
 import kr.co.grade.service.StudentService;
-import kr.co.grade.service.model.request.StudentReqDto;
+import kr.co.grade.service.model.request.StudentDto;
 import kr.co.grade.service.model.response.StudentResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,8 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping
-    public ApiResponse<StudentResDto.READ> createStudent(@Valid @RequestBody StudentReqDto.CREATE create) {
-        return ApiResponse.makeResponse(List.of(studentService.createStudent(create)));
+    public ApiResponse<StudentResDto.READ> create(@Valid @RequestBody StudentDto dto) {
+        return ApiResponse.makeResponse(List.of(studentService.create(dto)));
     }
 
     @GetMapping("/grade")
